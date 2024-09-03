@@ -1,0 +1,234 @@
+Windows PowerShell
+Copyright (C) Microsoft Corporation. Todos los derechos reservados.
+
+Prueba la nueva tecnología PowerShell multiplataforma https://aka.ms/pscore6
+
+PS C:\Users\loslo> mysqlsh
+MySQL Shell 8.0.38
+
+Copyright (c) 2016, 2024, Oracle and/or its affiliates.
+Oracle is a registered trademark of Oracle Corporation and/or its affiliates.
+Other names may be trademarks of their respective owners.
+
+Type '\help' or '\?' for help; '\quit' to exit.
+ MySQL  JS > \sql
+Switching to SQL mode... Commands end with ;
+ MySQL  SQL > \connect --mysql root@localhost:3306
+Creating a Classic session to 'root@localhost:3306'
+Please provide the password for 'root@localhost:3306': ********
+Save password for 'root@localhost:3306'? [Y]es/[N]o/Ne[v]er (default No): n
+Fetching global names for auto-completion... Press ^C to stop.
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| tbd_e1             |
+| world              |
++--------------------+
+7 rows in set (0.0154 sec)
+ MySQL  localhost:3306 ssl  SQL > use tbd_e1;
+Default schema set to `tbd_e1`.
+Fetching global names, object names from `tbd_e1` for auto-completion... Press ^C to stop.
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > show tables;
++------------------+
+| Tables_in_tbd_e1 |
++------------------+
+| automovil        |
+| mascota          |
+| peliculas        |
+| primer_tabla     |
+| student          |
+| tienda           |
+| tv               |
++------------------+
+7 rows in set (0.0075 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc peliculas;
++--------+-------------+------+-----+---------+----------------+
+| Field  | Type        | Null | Key | Default | Extra          |
++--------+-------------+------+-----+---------+----------------+
+| id     | int         | NO   | PRI | NULL    | auto_increment |
+| titulo | varchar(50) | NO   |     | NULL    |                |
+| genero | varchar(50) | NO   |     |NULL    |                |
+| clasi  | varchar(5)  | NO   |     | NULL    |                |
++--------+-------------+------+-----+---------+----------------+
+4 rows in set (0.0091 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > select * from peliculas;
++----+---------------------+---------+-------+
+| id | titulo              | genero  | clasi |
++----+---------------------+---------+-------+
+|  1 | coraline            | comedia | PG    |
+|  2 | titanice            | comedia | PG13  |
+|  3 | alien               | terror  | PG13  |
+| 4 | alien vs depredador | terror  | PG13  |
+| 20 | dragon ball         | terror  | PG13  |
+| 21 | dragon ball z       | terror  | PG13  |
++----+---------------------+---------+-------+
+6 rows in set (0.0611 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > insert into peliculas 
+                                       -> (titulo, genero, clasi)
+                                       -> value("deadpool","komedia","adul");
+Query OK, 1 row affected (0.0485 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > select * from peliculas;
++----+---------------------+---------+-------+
+| id | titulo              | genero  | clasi |
++----+---------------------+---------+-------+
+|  1 | coraline            | comedia | PG    |
+|  2 | titanice            | comedia | PG13  |
+|  3 | alien               | terror  | PG13  |
+|  4 | alien vs depredador | terror  | PG13  |
+| 20 | dragon ball         | terror  | PG13  |
+| 21 | dragon ball z       | terror  | PG13  |
+| 22 | deadpool            | komedia | adul  |
++----+---------------------+---------+-------+
+7 rows in set (0.0010 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > create table playeras(
+                                       -> marca varchar(50),
+                                       -> modelo varchar(50),
+                                       -> id int auto_increment key, 
+                                       ->  varchar(50)     
+                                       -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version f
+or the right syntax to use near 'varchar(50)' at line 5
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > create table playeras(
+                                       -> id int auto_increment key,
+                                       -> maraca varchar (50) not null,
+                                       -> modelo varchar (50) not null,
+                                       -> talla enum ("s","m","l","xl","xxl"));
+Query OK, 0 rows affected (0.1729 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc playeras;          
++--------+------------------------------+------+-----+---------+----------------+
+| Field  | Type                         | Null | Key | Default | Extra          |
++--------+------------------------------+------+-----+---------+----------------+
+| id     | int                          | NO   | PRI | NULL    | auto_increment |
+| maraca | varchar(50)                  | NO   |     | NULL    |                |
+| modelo | varchar(50)                  | NO   |     | NULL    |                |
+| talla  | enum('s','m','l','xl','xxl') | YES  |     | NULL    |                |
++--------+------------------------------+------+-----+---------+----------------+
+4 rows in set (0.0197 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > insert into playeras(maraca,modelo,talla)
+                                       -> values("cuidado con el perro","prime","xl");
+Query OK, 1 row affected (0.0138 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > insert into playeras(maraca,modelo,talla) values("cuidado con el perro","prime","
+xxxl");  
+ERROR: 1265 (01000): Data truncated for column 'talla' at row 1
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > select * from playeras;
++----+----------------------+--------+-------+
+| id | maraca               | modelo | talla |
++----+----------------------+--------+-------+
+|  1 | cuidado con el perro | prime  | xl    |
++----+----------------------+--------+-------+
+1 row in set (0.0008 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > insert into playeras(maraca,modelo,talla) values("cuidado con el perro","prime","
+l");   
+Query OK, 1 row affected (0.0113 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > select * from playeras;
++----+----------------------+--------+-------+
+| id | maraca               | modelo | talla |
++----+----------------------+--------+-------+
+|  1 | cuidado con el perro | prime  | xl    |
+|  2 | cuidado con el perro | prime  | l     |
++----+----------------------+--------+-------+
+2 rows in set (0.0013 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > create table clientes(
+                                       -> id int auto_increment key,
+                                       -> razon social varchar (50) not null,
+                                       -> direccion ^C
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > create table cliente(
+                                       -> id int auto_increment key,
+                                       -> nombre varchar (50) not null,
+                                       -> direccion varchar (100) not null,
+                                       -> telefono varchar (10),    
+                                       -> denominacion enum ("persona fisica","persona moral"));
+Query OK, 0 rows affected (0.0518 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc cliente 
+                                       -> ;
++--------------+----------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                   | Null | Key | Default | Extra          |
++--------------+----------------------------------------+------+-----+---------+----------------+
+| id           | int                                    | NO   | PRI | NULL    | auto_increment |
+| nombre       | varchar(50) | NO   |     | NULL    |                |
+| direccion    | varchar(100)                           | NO   |     | NULL    |                |
+| telefono     | varchar(10)                            | YES  |     | NULL    |                |
+| denominacion | enum('persona fisica','persona moral') | YES  |     | NULL    |                |
++--------------+----------------------------------------+------+-----+---------+----------------+
+5 rows in set (0.0111 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > insert into cliente                                                             
+                                       -> (nombre,direccion,telefono,denominacion ) 
+                                       -> values("juan","parque de mezones",6144446890,"persona fisica"));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version f
+or the right syntax to use near ')' at line 3
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > insert into cliente (nombre,direccion,telefono,denominacion ) values("juan","parq
+ue de mezones","6144446890","persona fisica"));
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version f
+or the right syntax to use near ')' at line 1
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > insert into cliente (nombre,direccion,telefono,denominacion ) values("juan","parq
+ue de mezones","46890","persona fisica"));     
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version f
+or the right syntax to use near ')' at line 1
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > insert into cliente (nombre,direccion,telefono,denominacion ) values("juan","parq
+ue de mezones","persona fisica"));        
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version f
+or the right syntax to use near ')' at line 1
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > insert into cliente(nombre, direccion, telefono, denominacion)
+                                       -> values("juan","parque","xxx","persona fisica");
+Query OK, 1 row affected (0.0186 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > insert into cliente(nombre, direccion, telefono, denominacion) values("oxxo","par
+que","xxx","persona moral"); 
+Query OK, 1 row affected (0.0101 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > select * from cliente; 
++----+--------+-----------+----------+----------------+
+| id | nombre |direccion | telefono | denominacion   |
++----+--------+-----------+----------+----------------+
+|  1 | juan   | parque    | xxx      | persona fisica |
+|  2 | oxxo   | parque    | xxx      | persona moral  |
++----+--------+-----------+----------+----------------+
+2 rows in set (0.0037 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > show create table cliente;
++---------+----------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table
+
+                                                                                                               |
++---------+----------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------+
+| cliente | CREATE TABLE `cliente` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(50) NOT NULL,
+  `direccion` varchar(100) NOT NULL,
+  `telefono` varchar(10) DEFAULT NULL,
+  `denominacion` enum('persona fisica','persona moral') DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++---------+----------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------------+
+1 row in set (0.0082 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table cliente 
+                                       -> add rfc varchar (13)
+                                       -> after nombre;
+Query OK, 0 rows affected (0.0730 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc cliente;
++--------------+----------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                   | Null | Key | Default | Extra          |
++--------------+----------------------------------------+------+-----+---------+----------------+
+| id           | int                                    | NO   | PRI | NULL    | auto_increment |
+| nombre       | varchar(50)                            | NO   |     | NULL    |               |
+| rfc          | varchar(13)                            | YES  |     | NULL    |                |
+| direccion    | varchar(100)                           | NO   |     | NULL    |                |
+| telefono     | varchar(10)                            | YES  |     | NULL    |                |
+| denominacion | enum('persona fisica','persona moral') | YES  |     | NULL    |                |
++--------------+----------------------------------------+------+-----+---------+----------------+
+6 rows in set (0.0093 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > select * from cliente;    
++----+--------+------+-----------+----------+----------------+  
+| id | nombre | rfc  | direccion | telefono | denominacion   |
++----+--------+------+-----------+----------+----------------+
+| 1 | juan   | NULL | parque    | xxx      | persona fisica |
+|  2 | oxxo   | NULL | parque    | xxx      | persona moral  |
++----+--------+------+-----------+----------+----------------+
+2 rows in set (0.0041 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > 
