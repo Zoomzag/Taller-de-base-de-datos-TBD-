@@ -1,0 +1,274 @@
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc clientes 
+
+desc clientes;
+ERROR: 1146 (42S02): Table 'tbd_e1.clientes' doesn't exist
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc cliente;
++--------------+----------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                   | Null | Key | Default | Extra          |
++--------------+----------------------------------------+------+-----+---------+----------------+
+| id           | int                                    | NO   | PRI | NULL    | auto_increment |
+| nombre       | varchar(50)                            | NO   |     | NULL    |               |
+| rfc          | varchar(13)                            | YES  |     | NULL    |                |
+| direccion    | varchar(100)                           | NO   |     | NULL    |                |
+| telefono     | varchar(10)                            | YES  |     | NULL    |                |
+| denominacion | enum('persona fisica','persona moral') | YES  |     | NULL    |                |
++--------------+----------------------------------------+------+-----+---------+----------------+
+6 rows in set (0.2416 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table cliente 
+                                       -> drop rfc;
+Query OK, 0 rows affected (0.2755 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc cliente;
++--------------+----------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                   | Null | Key | Default | Extra          |
++--------------+----------------------------------------+------+-----+---------+----------------+
+| id           | int                                    | NO   | PRI | NULL    | auto_increment |
+| nombre       | varchar(50)                            | NO   |     | NULL    |                |
+| direccion    | varchar(100)                           | NO   |     | NULL    |                |
+| telefono     | varchar(10)                            | YES  |     | NULL    |                |
+| denominacion | enum('persona fisica','persona moral') | YES  |     | NULL    |                |
++--------------+----------------------------------------+------+-----+---------+----------------+
+5 rows in set (0.0068 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table cliente         
+                                       -> add column rfc varchar (13) not null
+                                       -> after nombr;
+ERROR: 1054 (42S22): Unknown column 'nombr' in 'cliente'
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table cliente add column rfc varchar (13) not null after nombre;
+Query OK, 0 rows affected (0.1690 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc cliente; 
++--------------+----------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                   | Null | Key | Default | Extra          |
++--------------+----------------------------------------+------+-----+---------+----------------+
+| id           | int                                    | NO   | PRI | NULL    | auto_increment |
+| nombre       | varchar(50)                            | NO   |     | NULL    |                |
+| rfc          | varchar(13)                            | NO   |     | NULL    |                |
+| direccion    | varchar(100)                           | NO   |     | NULL    |                |
+|telefono     | varchar(10)                            | YES  |     | NULL    |                |
+| denominacion | enum('persona fisica','persona moral') | YES  |     | NULL |                |
++--------------+----------------------------------------+------+-----+---------+----------------+
+6 rows in set (0.0082 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table cliente
+                                       -> change colum nombre
+                                       -> razon_social varchar (100) not null;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version f
+or the right syntax to use near 'razon_social varchar (100) not null' at line 3
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table cliente change column nombre razon_social varchar (100) not null;
+Query OK, 2 rows affected (0.2763 sec)
+
+Records: 2  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc cliente; 
++--------------+----------------------------------------+------+-----+---------+----------------+
+| Field        | Type                                   | Null | Key | Default | Extra          |
++--------------+----------------------------------------+------+-----+---------+----------------+
+| id           | int                                    | NO   | PRI | NULL    | auto_increment |
+| razon_social | varchar(100)                           | NO   |     | NULL    |                |
+| rfc          | varchar(13)                            | NO   |     | NULL    |                |
+| direccion    | varchar(100)                           | NO   |     | NULL    |                |
+| telefono     | varchar(10)                            | YES  |     | NULL |                |
+| denominacion | enum('persona fisica','persona moral') | YES  |     | NULL    |                |
++--------------+----------------------------------------+------+-----+---------+----------------+
+6 rows in set (0.0041 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > select * from ciente;
+ERROR: 1146 (42S02): Table 'tbd_e1.ciente' doesn't exist
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > select * from cliente;
++----+--------------+-----+-----------+----------+----------------+
+| id | razon_social | rfc | direccion | telefono | denominacion   |
++----+--------------+-----+-----------+----------+----------------+
+|  1 | juan         |     | parque    | xxx      | persona fisica |
+|  2 | oxxo         |     | parque    | xxx      | persona moral  |
++----+--------------+-----+-----------+----------+----------------+
+2 rows in set (0.0028 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > create table docente(
+                                       -> nombre varchar(50) not null,
+                                       -> plaza varchar (50) not null,
+                                       -> h-plaza int(25) not null,
+                                       -> centroTrabajo varchar (100) not null,
+                                       -> salario decimal (20,4)    
+                                       -> ;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version f
+or the right syntax to use near '-plaza int(25) not null,
+centroTrabajo varchar (100) not null,
+salario decimal (' at line 4
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > create table docente( nombre varchar(50) not null, plaza varchar (50), h-plaza in
+t, centroTrabajo varchar (100) not null, salario decimal (20,4), antiguedad int);      
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version f
+or the right syntax to use near '-plaza int, centroTrabajo varchar (100) not null, salario decimal (20,4), antigu' at line 
+1
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > create table docente( nombre varchar(50) not null, plaza varchar (50), h_plaza in
+t, centroTrabajo varchar (100) not null, salario decimal (20,4), antiguedad int);
+Query OK, 0 rows affected (0.3792 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > show tables;
++------------------+
+| Tables_in_tbd_e1 |
++------------------+
+| automovil        |
+| cliente          |
+| docente          |
+| mascota          |
+| peliculas        |
+| playeras         |
+| primer_tabla     |
+| student          |
+| tienda           |
+| tv               |
++------------------+
+10 rows in set (0.1010 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc docente 
+                                       -> ;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| nombre        | varchar(50)   | NO   |     | NULL    |       |
+| plaza         | varchar(50)   | YES  |     | NULL    |       |
+| h_plaza       | int           | YES  |     | NULL |       |
+| centroTrabajo | varchar(100)  | NO   |     | NULL    |       |
+| salario       | decimal(20,4) | YES  |     | NULL    |       |
+| antiguedad    | int           | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+6 rows in set (0.0321 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table docente change column nombre razon_social varchar (100) not null;
+Query OK, 0 rows affected (0.1433 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc docente;         
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| razon_social  | varchar(100)  | NO   |     | NULL    |       |
+| plaza         | varchar(50)   | YES  |     | NULL    |       |
+| h_plaza       | int           | YES  |     | NULL    |       |
+| centroTrabajo | varchar(100)  | NO   |     | NULL    |       |
+| salario       | decimal(20,4) | YES  |     | NULL |       |
+| antiguedad    | int           | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+6 rows in set (0.0080 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table docente change column razon_social nombre varchar (100) not null;
+Query OK, 0 rows affected (0.0476 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table cliente add column rfc varchar (13) not null after nombre; 
+ERROR: 1054 (42S22): Unknown column 'nombre' in 'cliente'
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc docente;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| nombre        | varchar(100)  | NO   |     | NULL    |       |
+| plaza         | varchar(50)   | YES  |     | NULL    |       |
+| h_plaza       | int           | YES  |     | NULL |       |
+| centroTrabajo | varchar(100)  | NO   |     | NULL    |       |
+| salario       | decimal(20,4) | YES  |     | NULL    |       |
+| antiguedad    | int           | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+6 rows in set (0.0077 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table docente                                                  
+                                       -> add column id int auto_increment key,        
+                                       -> apellidos varchar(50) after nombre,
+                                       -> R_F_C varchar (13) after apellidos;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version f
+or the right syntax to use near 'apellidos varchar(50) after nombre,
+R_F_C varchar (13) after apellidos' at line 3
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc docente;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| nombre        | varchar(100) | NO   |     | NULL    |       |
+| plaza         | varchar(50)   | YES  |     | NULL    |       |
+| h_plaza       | int           | YES  |     | NULL    |       |
+| centroTrabajo | varchar(100)  | NO   |     | NULL    |       |
+| salario       | decimal(20,4) | YES  |     | NULL    |       |
+| antiguedad    | int           | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+6 rows in set (0.0100 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table docente add column id int auto_increment key, apellidos varchar(50) a
+fter nombre;
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version f
+or the right syntax to use near 'apellidos varchar(50) after nombre' at line 1
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table docente add column id int auto_increment key;                        
+Query OK, 0 rows affected (0.1973 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc docente;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| nombre        | varchar(100)  | NO   |     | NULL    |                |
+| plaza         | varchar(50)   | YES  |     | NULL    |                |
+| h_plaza       | int           | YES  |     | NULL    |                |
+| centroTrabajo | varchar(100)  | NO   |     | NULL    |                |
+| salario       | decimal(20,4) | YES  |     | NULL |                |
+| antiguedad    | int           | YES  |     | NULL    |                |
+| id            | int           | NO   | PRI | NULL    | auto_increment |
++---------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.0096 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table docente add column apellidos varchar(50) after nombre;               
+Query OK, 0 rows affected (0.0494 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table docente add column R_F_C varchar(13) after apellidos; 
+Query OK, 0 rows affected (0.0385 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc docente;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| nombre        | varchar(100)  | NO   |     | NULL    |                |
+| apellidos     | varchar(50)   | YES  |    | NULL    |                |
+| R_F_C         | varchar(13)   | YES  |     | NULL    |                |
+| plaza         | varchar(50)   | YES  |     | NULL    |                |
+| h_plaza       | int           | YES  |     | NULL    |                |
+| centroTrabajo |varchar(100)  | NO   |     | NULL    |                |
+| salario       | decimal(20,4) | YES  |     | NULL    |                |
+| antiguedad    | int           | YES  |     | NULL    |                |
+| id            | int           | NO   | PRI | NULL    | auto_increment |
++---------------+---------------+------+-----+---------+----------------+
+9 rows in set (0.0049 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table docente change column R_F_C  varchar (10) not null;              
+ERROR: 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version f
+or the right syntax to use near 'varchar (10) not null' at line 1
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table docente change column R_F_C rfc  varchar (10) not null;
+Query OK, 0 rows affected (0.1338 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table docente change column plaza Plaza varchar (50) not null; 
+Query OK, 0 rows affected (0.1019 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc docente;     
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| nombre        | varchar(100)  | NO   |     | NULL    |                |
+| apellidos     | varchar(50)   | YES  |     | NULL    |                |
+| rfc           | varchar(10)   | NO   |     | NULL    |                |
+| Plaza         | varchar(50)   | NO   |     | NULL    |                |
+| h_plaza       | int           | YES  |     | NULL    |                |
+| centroTrabajo | varchar(100)  | NO   |     | NULL    |                |
+| salario       | decimal(20,4) | YES  |     | NULL    |                |
+| antiguedad    | int           | YES  |     | NULL    |                |
+| id            | int           | NO   | PRI | NULL    | auto_increment |
++---------------+---------------+------+-----+---------+----------------+
+9 rows in set (0.0061 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > alter table docente change column rfc  R_F_C  varchar (13) not null;
+Query OK, 0 rows affected (0.0237 sec)
+
+Records: 0  Duplicates: 0  Warnings: 0
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > desc docente;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| nombre        | varchar(100)  | NO   |     | NULL    |                |
+| apellidos     | varchar(50)   | YES  |     | NULL    |                |
+| R_F_C         | varchar(13)   | NO   |     | NULL    |                |
+| Plaza         | varchar(50)   | NO   |     | NULL    |                |
+| h_plaza       | int           | YES  |     | NULL    |                |
+| centroTrabajo | varchar(100)  | NO   |     | NULL    |                |
+| salario       | decimal(20,4) | YES  |     | NULL    |                |
+| antiguedad    | int           | YES  |     | NULL    |                |
+| id            | int           | NO   | PRI | NULL    | auto_increment |
++---------------+---------------+------+-----+---------+----------------+
+9 rows in set (0.0080 sec)
+ MySQL  localhost:3306 ssl  tbd_e1  SQL > 
